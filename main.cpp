@@ -13,9 +13,9 @@ int main()
     p.Read(lista);
     p.Embaralhar(lista, J1, J2);
 
-    cout << "|***************************************************|" << endl;
-    cout << "| Bem-Vindo ao SuperTrunfo da Fernanda e da Barbara |" << endl;
-    cout << "|***************************************************|\n\n"
+    cout << "\n\n|****************************************************|" << endl;
+    cout << "| Bem-Vindo ao SuperTrunfo da Fernanda e da Barbara! |" << endl;
+    cout << "|****************************************************|\n\n"
          << endl;
 
     cout << "|----------------------------------------------------------------|" << endl;

@@ -28,10 +28,12 @@ public:
     void Embaralhar(carro definicao[], superTrunfo &J1, superTrunfo &J2);
     void Serve(carro &x);
     void CartasDosJogadores(carro x);
+    void Clear();
     void JogadasDoJogo(superTrunfo &J1, superTrunfo &J2, carro &a, carro &b, bool &jogadas);
     void RodadasDoJogoTrunfo(superTrunfo &J1, superTrunfo &J2, carro &a, carro &b, bool &jogadas);
     void Jogo(superTrunfo &J1, superTrunfo &J2);
     void Append(carro x);
+    bool ComparacaoDeCartas(superTrunfo &J1, superTrunfo &J2, carro &a, carro &b, int escolha);
     bool Empty();
     bool Full();
     bool ETrunfo(carro a, carro b);

@@ -50,7 +50,6 @@ void superTrunfo::Read(carro lista[])
 void superTrunfo::Embaralhar(carro lista[], superTrunfo &J1, superTrunfo &J2)
 {
     int value, value2;
-    bool repetido;
     carro temp;
 
     srand(time(NULL));
@@ -65,12 +64,12 @@ void superTrunfo::Embaralhar(carro lista[], superTrunfo &J1, superTrunfo &J2)
         lista[value2] = temp;
     }
 
-    for (int i = 0; i <= 16; i++)
+    for (int i = 0; i < 16; i++)
     {
         J1.Append(lista[i]);
     }
 
-    for (int i = 16; i <= 32; i++)
+    for (int i = 16; i < 32; i++)
     {
         J2.Append(lista[i]);
     }
@@ -79,24 +78,28 @@ void superTrunfo::Embaralhar(carro lista[], superTrunfo &J1, superTrunfo &J2)
 void superTrunfo::CartasDosJogadores(carro x)
 {
     cout << "|-----------------------------------------|" << endl;
-    cout << "  Modelo da carta:     " << x.model << endl;
     cout << "  Grupo da carta:      " << x.group << endl;
-    cout << "  Preço da carta:      " << x.price << endl;
-    cout << "  Cavalos de potencia: " << x.horsepower << endl;
-    cout << "  Peso do veiculo:     " << x.curb_weight << endl;
+    cout << "  Modelo da carta:     " << x.model << endl;
+    cout << "  1 - Peso do veiculo:     " << x.curb_weight << endl;
+    cout << "  2 - Preço da carta:      " << x.price << endl;
+    cout << "  3 - Tamanho do Motor:    " << x.engine_size << endl;
+    cout << "  4 - Cavalos de potencia: " << x.horsepower << endl;
+    cout << "|-----------------------------------------|\n\n"
+         << endl;
     cout << "|-----------------------------------------|" << endl;
+    cout << "|       Escolha um valor de 1 a 4         |" << endl;
+    cout << "|-----------------------------------------|\n\n"
+         << endl;
 }
 
 bool superTrunfo::ETrunfo(carro a, carro b)
 {
-    switch(a.group == "1A" || b.group){
-        case 
-    }
     if (a.group == "1A" || b.group == "1A")
     {
         cout << "|------------------|" << endl;
         cout << "|      Trunfo!!    |" << endl;
-        cout << "|------------------|" << endl;
+        cout << "|------------------|\n\n"
+             << endl;
         return true;
     }
     else
@@ -104,7 +107,6 @@ bool superTrunfo::ETrunfo(carro a, carro b)
         return false;
     }
 }
-
 void superTrunfo::JogadasDoJogo(superTrunfo &J1, superTrunfo &J2, carro &a, carro &b, bool &jogadas)
 {
     int jogador_person;
@@ -115,27 +117,68 @@ void superTrunfo::JogadasDoJogo(superTrunfo &J1, superTrunfo &J2, carro &a, carr
     case 0:
         cout << "|-----------------------------|" << endl;
         cout << "|  Jogador Person e sua VEZ!  |" << endl;
-        cout << "|-----------------------------|" << endl;
+        cout << "|-----------------------------|\n\n"
+             << endl;
         cin >> jogador_person;
 
-        do
+        while (jogador_person != (int)jogador_person || jogador_person < 1 || jogador_person > 4)
         {
             cout << "|----------------------------------------------------|" << endl;
             cout << "|  Erro! Tente novamente, insirindo uma nova carta!  |" << endl;
-            cout << "|----------------------------------------------------|" << endl;
+            cout << "|----------------------------------------------------|\n\n"
+                 << endl;
             cin >> jogador_person;
-        } while (jogador_person != jogador_person || jogador_person < 0 || jogador_person > 3);
+        }
+        if (ComparacaoDeCartas(J1, J2, a, b, jogador_person))
+        {
+            cout << "|------------------------------------------------|" << endl;
+            cout << "|      Ganhador da Rodada: Jogador Person!       |" << endl;
+            cout << "|------------------------------------------------|\n\n"
+                 << endl;
+            J1.Append(a);
+            J1.Append(b);
+        }
+        else
+        {
+            cout << "|------------------------------------------------|" << endl;
+            cout << "|     Ganhador da Rodada: Jogador Machine!       |" << endl;
+            cout << "|------------------------------------------------|\n\n"
+                 << endl;
+            J2.Append(b);
+            J2.Append(a);
+        }
         jogadas = 1;
-
+        break;
     case 1:
-        cout << "|-------------------------------|" << endl;
-        cout << "|  Jogador Machine, e sua vez!  |" << endl;
-        cout << "|-------------------------------|" << endl;
-        cin >> convert;
+        cout << "|-------------------------------------------------------------|" << endl;
+        cout << "|  Jogador Machine jogou sua carta!                           |" << endl;
+        cout << "|  Jogador Person, digite algum numero para continuar o jogo! |" << endl;
+        cout << "|-------------------------------------------------------------|\n\n"
+             << endl;
+        cin >> jogador_person;
 
         int jogador_machine;
-        jogador_machine = rand() % 3 + 1;
+        jogador_machine = rand() % 2 + 1;
+        if (ComparacaoDeCartas(J2, J1, b, a, jogador_machine))
+        {
+            cout << "|************************************************|" << endl;
+            cout << "|     Vencedor da rodada é o Jogador Machine!    |" << endl;
+            cout << "|************************************************|\n\n"
+                 << endl;
+            J2.Append(a);
+            J2.Append(b);
+        }
+        else
+        {
+            cout << "|************************************************|" << endl;
+            cout << "|     Vencedor da rodada é o Jogador Person!     |" << endl;
+            cout << "|************************************************|\n\n"
+                 << endl;
+            J1.Append(b);
+            J1.Append(a);
+        }
         jogadas = 0;
+        break;
     }
 }
 
@@ -144,7 +187,8 @@ void superTrunfo::RodadasDoJogoTrunfo(superTrunfo &J1, superTrunfo &J2, carro &a
     cout << "|----------------------------------------|" << endl;
     cout << "  Carta do Jogador Person: " << a.group << endl;
     cout << "  Carta do outro Jogador Machine: " << b.group << endl;
-    cout << "|----------------------------------------|" << endl;
+    cout << "|----------------------------------------|\n\n"
+         << endl;
 
     if (a.group[1] == 'A')
     {
@@ -152,10 +196,12 @@ void superTrunfo::RodadasDoJogoTrunfo(superTrunfo &J1, superTrunfo &J2, carro &a
         {
             cout << "|==============================|" << endl;
             cout << "|   Carta Perdedora: TRUNFO    |" << endl;
-            cout << "|==============================|\n\n" << endl;
+            cout << "|==============================|\n\n"
+                 << endl;
             cout << "|************************************************|" << endl;
             cout << "|     Vencedor da rodada é o Jogador Machine!    |" << endl;
-            cout << "|************************************************|" << endl;
+            cout << "|************************************************|\n\n"
+                 << endl;
 
             J2.Append(a);
             J2.Append(b);
@@ -163,8 +209,9 @@ void superTrunfo::RodadasDoJogoTrunfo(superTrunfo &J1, superTrunfo &J2, carro &a
         else
         {
             cout << "|*************************************************|" << endl;
-            cout << "|   Carta TRUNFO do Jogador Person é a Campeao!!   | " << endl;
-            cout << "|*************************************************|" << endl;
+            cout << "|   Carta TRUNFO do Jogador Person é a Campeao!!  | " << endl;
+            cout << "|*************************************************|\n\n"
+                 << endl;
             J1.Append(b);
             J1.Append(a);
         }
@@ -175,31 +222,49 @@ void superTrunfo::RodadasDoJogoTrunfo(superTrunfo &J1, superTrunfo &J2, carro &a
         {
             cout << "|==============================|" << endl;
             cout << "|   Carta Perdedora: TRUNFO    |" << endl;
-            cout << "|==============================|\n\n" << endl;
+            cout << "|==============================|\n\n"
+                 << endl;
             cout << "|************************************************|" << endl;
             cout << "|     Vencedor da rodada é o Jogador Person!     |" << endl;
-            cout << "|************************************************|" << endl;
+            cout << "|************************************************|\n\n"
+                 << endl;
 
-            J1.Append(b);
             J1.Append(a);
+            J1.Append(b);
         }
         else
         {
             cout << "|***************************************************|" << endl;
             cout << "|   Carta TRUNFO do Jogador Machine é a Campeao!!   | " << endl;
-            cout << "|***************************************************|" << endl;
-            J2.Append(a);
+            cout << "|***************************************************|\n\n"
+                 << endl;
             J2.Append(b);
+            J2.Append(a);
         }
     }
-    if (jogadas == 0)
+    
+    jogadas  == 0 ? jogadas = 1 : jogadas = 0; 
+}
+
+bool superTrunfo::ComparacaoDeCartas(superTrunfo &J1, superTrunfo &J2, carro &a, carro &b, int escolha)
+{
+    switch (escolha)
     {
-        jogadas = 1;
+    case 1:
+        return (a.curb_weight > b.curb_weight) ? true : false;
+        break;
+    case 2:
+        return (a.price > b.price) ? true : false;
+        break;
+    case 3:
+        return (a.engine_size > b.engine_size) ? true : false;
+        break;
+    case 4:
+        return (a.horsepower > b.horsepower) ? true : false;
+        break;
     }
-    else
-    {
-        jogadas = 0;
-    }
+
+    return false;
 }
 
 void superTrunfo::Jogo(superTrunfo &J1, superTrunfo &J2)
@@ -222,12 +287,40 @@ void superTrunfo::Jogo(superTrunfo &J1, superTrunfo &J2)
         }
         cout << "|----------------------------------------|" << endl;
         cout << "  Cartas do Jogador Person: " << J1.Size() << endl;
-        cout << "|----------------------------------------|\n\n" << endl;
+        cout << "|----------------------------------------|\n\n"
+             << endl;
         cout << "|----------------------------------------|" << endl;
         cout << "  Cartas do Jogador Machine: " << J2.Size() << endl;
-        cout << "|----------------------------------------|\n\n" << endl;
+        cout << "|----------------------------------------|\n\n"
+             << endl;
 
     } while (J1.Size() < LIMIT && J2.Size() < LIMIT);
+    if (J1.Size() == LIMIT)
+    {
+        cout << "|************************************************|" << endl;
+        cout << "|     Vencedor da rodada é o Jogador Person!     |" << endl;
+        cout << "|************************************************|\n\n"
+             << endl;
+        cout << J1.Size() << endl;
+        for (int i = 1; i < LIMIT; i++)
+        {
+            J1.Serve(a);
+            cout << a.model << endl;
+        }
+    }
+    else
+    {
+        cout << "|*************************************************|" << endl;
+        cout << "|     Vencedor da rodada é o Jogador MAchine!     |" << endl;
+        cout << "|*************************************************|\n\n"
+             << endl;
+        cout << J2.Size() << endl;
+        for (int i = 1; i < LIMIT; i++)
+        {
+            J2.Serve(a);
+            cout << a.model << endl;
+        }
+    }
 }
 
 bool superTrunfo::Empty()
@@ -242,7 +335,6 @@ bool superTrunfo::Full()
 
 void superTrunfo::Append(carro x)
 {
-    int i;
     if (Full())
     {
         cout << "Fila cheia!";
@@ -260,7 +352,7 @@ void superTrunfo::Serve(carro &x)
         cout << "Fila vazia sem cartas!";
         abort();
     }
-    count = count - 1;
+    count--;
     x = carta[head];
     head = (head % LIMIT) + 1;
 }
