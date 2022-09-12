@@ -1,9 +1,13 @@
 // Acesse o README do projeto, para mais informações.
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <time.h>
+#include <string>
+#include <locale.h> 
 #define LIMIT 32
 using namespace std;
-
 #ifndef SUPERTRUNFO_H
 #define SUPERTRUNFO_H
 

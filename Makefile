@@ -1,10 +1,14 @@
 CC=g++
+outfile = out
 
-main: index.o main.o 
-	$(CC) main.o -c index.o superTrunfo.h
+main: main.o superTrunfo.o
+	$(CC) main.o superTrunfo.o -o $(outfile)
 main.o: main.cpp
 	$(CC) -c main.cpp -o main.o
-index.o: index.cpp 
-	$(CC) -c index.cpp -o index.o
+superTrunfo.o: superTrunfo.cpp
+	$(CC) -c superTrunfo.cpp -o superTrunfo.o
 clean:
-	rm *.o
+	rm *.o $(outfile)
+
+debug: CC+= -g
+debug: main

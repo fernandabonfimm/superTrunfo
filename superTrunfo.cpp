@@ -1,11 +1,6 @@
 // Acesse o README do projeto, para mais informações.
 
-#include <iostream>
 #include "superTrunfo.h"
-#include <fstream>
-#include <sstream>
-#include <time.h>
-#include <string>
 using std::getline;
 using namespace std;
 
