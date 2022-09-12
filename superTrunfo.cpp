@@ -305,9 +305,9 @@ void superTrunfo::Jogo(superTrunfo &J1, superTrunfo &J2)
     }
     else
     {
-        cout << "|*************************************************|" << endl;
-        cout << "|     Vencedor da rodada é o Jogador MAchine!     |" << endl;
-        cout << "|*************************************************|\n\n"
+        cout << "|**************************************************|" << endl;
+        cout << "|     Vencedor da rodada e o Jogador Machine!     |" << endl;
+        cout << "|**************************************************|\n\n"
              << endl;
         cout << J2.Size() << endl;
         for (int i = 1; i < LIMIT; i++)
