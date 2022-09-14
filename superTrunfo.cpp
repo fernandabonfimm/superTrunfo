@@ -11,7 +11,8 @@ superTrunfo::superTrunfo()
     count = 0;
 }
 
-void superTrunfo::Read(carro lista[])
+//Recebe um vetor lista do tipo carro (struct com os registros das castas), abre o arquivo cards.csv e faz a leitura do mesmo. Foi necessário fazer a conversão dos registros do tipo int para string.
+void superTrunfo::Read(carro lista[]) 
 {
     int i;
     ifstream ler("cards.csv", ios::in);
@@ -42,6 +43,7 @@ void superTrunfo::Read(carro lista[])
     }
 }
 
+// Para embaralhar as cartas e dividir em dois decks foi necessário 3 parâmetros, um vetor do tipo carro para armazenar as cartas embaralhadas e para isso geramos números aleatórios com a função rand, e duas variáveis por referência para realizar a inserção e divisão igual das cartas nos decks.
 void superTrunfo::Embaralhar(carro lista[], superTrunfo &J1, superTrunfo &J2)
 {
     int value, value2;
@@ -70,6 +72,7 @@ void superTrunfo::Embaralhar(carro lista[], superTrunfo &J1, superTrunfo &J2)
     }
 }
 
+//Mostra ao usuário os registros contidos na carta
 void superTrunfo::CartasDosJogadores(carro x)
 {
     cout << "|-----------------------------------------|" << endl;
@@ -87,6 +90,7 @@ void superTrunfo::CartasDosJogadores(carro x)
          << endl;
 }
 
+//Como foi determinado pelo enunciado do trabalho existe uma carta trunfo (1A), caso ela esteja com algum dos jogadores pode ser usada para vencer qualquer carta do baralho, exceto as do mesmo grupo A.
 bool superTrunfo::ETrunfo(carro a, carro b)
 {
     if (a.group == "1A" || b.group == "1A")
@@ -102,6 +106,8 @@ bool superTrunfo::ETrunfo(carro a, carro b)
         return false;
     }
 }
+
+//Dentro da função teremos a chamada de outra, que é ComparacaoDeCartas(), se a carta do jogador 1 for a maior
 void superTrunfo::JogadasDoJogo(superTrunfo &J1, superTrunfo &J2, carro &a, carro &b, bool &jogadas)
 {
     int jogador_person;
@@ -177,6 +183,7 @@ void superTrunfo::JogadasDoJogo(superTrunfo &J1, superTrunfo &J2, carro &a, carr
     }
 }
 
+//Nesta função é feita uma análise da carta da vez, caso seja trunfo ou não. Se a carta do jogador 1 for a carta trunfo ele vence a rodada e fica com a carta do jogador 2 ou caso a carta do jogador 2 for a carta trunfo ele vence a rodada e fica com a carta do jogador 1.
 void superTrunfo::RodadasDoJogoTrunfo(superTrunfo &J1, superTrunfo &J2, carro &a, carro &b, bool &jogadas)
 {
     cout << "|----------------------------------------|" << endl;
@@ -241,6 +248,7 @@ void superTrunfo::RodadasDoJogoTrunfo(superTrunfo &J1, superTrunfo &J2, carro &a
     jogadas  == 0 ? jogadas = 1 : jogadas = 0; 
 }
 
+//Na comparação das cartas precisaremos das cartas dos jogadores 1 e 2 e uma variável escolha para guardar qual registro o jogador irá querer comparar (peso do veículo, preço da carta, tamanho do motor ou cavalos de potência). Essa função será usada dentro da JogadasDoJogo().
 bool superTrunfo::ComparacaoDeCartas(superTrunfo &J1, superTrunfo &J2, carro &a, carro &b, int escolha)
 {
     switch (escolha)
@@ -262,6 +270,7 @@ bool superTrunfo::ComparacaoDeCartas(superTrunfo &J1, superTrunfo &J2, carro &a,
     return false;
 }
 
+//Mostra ao usuário as cartas de cada um dos jogadores e a quantidade delas que cada um deles possui, isso enquanto o número de carta de ambos for menor que o limite máximo de cartas que são 32. Caso o número de cartas do jogador 1 for igual ao valor máximo de cartas do baralho significa que ele é o vencedor da rodada e vice versa com o jogador 2.
 void superTrunfo::Jogo(superTrunfo &J1, superTrunfo &J2)
 {
     carro a, b;
@@ -318,16 +327,19 @@ void superTrunfo::Jogo(superTrunfo &J1, superTrunfo &J2)
     }
 }
 
+// Se o número de elementos for zero então a fila está vazia (sem cartas).
 bool superTrunfo::Empty()
 {
     return (count == 0);
 }
 
+//A fila só está cheia quando o número de elementos no vetor for igual ao limite máximo estabelecido.
 bool superTrunfo::Full()
 {
     return (count == LIMIT);
 }
 
+//A função Append insere as cartas no vetor fila, recebe uma variável por valor, depois de verificar se a fila não está cheia é feito um acréscimo no número de elementos no vetor e a carta será inserida sempre no final da fila
 void superTrunfo::Append(carro x)
 {
     if (Full())
@@ -340,6 +352,7 @@ void superTrunfo::Append(carro x)
     carta[tail] = x;
 }
 
+//Operação utilizada para remoção das cartas, é preciso realizar o decremento da variável count (traz o número de elementos dentro do vetor circular), a remoção da fila sempre é feita no head, por isso a carta no índice head passa a ser a variável x a ser removida, por fim é feita o rearranjo da posição do novo head após a remoção.
 void superTrunfo::Serve(carro &x)
 {
     if (Empty())
@@ -352,11 +365,13 @@ void superTrunfo::Serve(carro &x)
     head = (head % LIMIT) + 1;
 }
 
+// Retorna nosso contador count com o número de elementos contidos na fila.
 int superTrunfo::Size()
 {
     return count;
 }
 
+//Recebe por referência uma variável x do tipo carro para retornar a última carta
 void superTrunfo::Rear(carro &x)
 {
     if (Empty())

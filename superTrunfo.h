@@ -11,6 +11,12 @@ using namespace std;
 #ifndef SUPERTRUNFO_H
 #define SUPERTRUNFO_H
 
+/*
+Organização do Código:
+O trabalho foi dividido em 3 arquivos principais: superTrunfo.cpp e superTrunfo.h fazem a implementação do TAD e no arquivo main.cpp implementa o programa principal.
+Para simplificar a execução do trabalho decidimos dividi-lo em mais operações além das necessárias para gerar a estrutura da fila circular. Como a operação para embaralhar, fazer as jogadas dos jogadores, rodada trunfo, comparação das cartas, mostrar a carta na tela para o usuário e a operação Jogo() que traz todas as outras funções dentro dele, facilitando sua chamada no programa principal.
+*/
+
 struct carro
 {
     string model;

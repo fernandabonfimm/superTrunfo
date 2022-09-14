@@ -4,6 +4,7 @@
 #include "superTrunfo.h"
 using namespace std;
 
+//O programa principal traz o vetor com o tamanho limite de cartas, lê e embaralha todo o baralho e por fim chama o método Jogo(J1, J2), pois nele todas as outras funções estão contidas e serão chamadas dentro dele.
 int main()
 {
      setlocale(LC_ALL, "Portuguese");
